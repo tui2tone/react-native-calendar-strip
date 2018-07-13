@@ -335,7 +335,7 @@ class CalendarStrip extends Component {
       datesForWeek.push(date);
       datesAllowedForWeek.push(this.isDateAllowed(date, props));
       datesSelectedForWeek.push(this.isDateSelected(date, selectedDate));
-      datesCustomStylesForWeek.push(this.getCustomDateStyle(date, props));
+      datesCustomStylesForWeek.push(this.getCustomDateStyle(date, props, selectedDate));
     }
     return {
       datesForWeek,
@@ -416,7 +416,7 @@ class CalendarStrip extends Component {
     }
   }
 
-  getCustomDateStyle(date, props = this.props) {
+  getCustomDateStyle(date, props = this.props, selectedDate) {
     for (let customDateStyle of props.customDatesStyles) {
       if (customDateStyle.endDate) {
         // Range
@@ -432,7 +432,7 @@ class CalendarStrip extends Component {
         }
       } else {
         // Single date
-        if (date.isSame(customDateStyle.startDate, "day")) {
+        if (date.isSame(customDateStyle.startDate, "day") && !date.isSame(selectedDate, "day")) {
           return customDateStyle;
         }
       }
